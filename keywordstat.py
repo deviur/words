@@ -14,6 +14,7 @@ keywordstat.py < yandex-stat-file.csv
 """
 
 import csv
+import re
 import sys
 
 input_csv = csv.DictReader(sys.stdin)
@@ -52,6 +53,24 @@ print(queries)
 
 # TODO Сделать сортировку. Как?
 
-# Подсчёт количества ключевых слов
+# Получить список слов из запросов и сумму кликов
+num = 1
+all_words = {}
 for query in queries:
-    pass
+    # PEP 8: invalid escape sequence '\w' For us it means that flake8 is upset
+    words = re.findall('\w+', query['Query'])
+
+    print(num, words)
+    num += 1
+    for word in words:
+        if word in all_words:
+            print(f"word in all_words: {word}: {all_words[word]['Query']} + {query['Query']}")
+            all_words[word]['Query'].append(query['Query'])
+            all_words[word]['Clicks'] += query['Clicks']
+        else:
+            print(f"Новый эллемент: \n {word} -> {query['Clicks']} = {query['Query']}")
+            all_words[word] = {'Clicks': query['Clicks'], 'Query': [query['Query']]}
+
+print(all_words)
+
+# TODO Убрать DEBUG-код. Подумать как упростить вывод результата.
