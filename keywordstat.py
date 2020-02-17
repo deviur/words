@@ -20,7 +20,7 @@ import csv
 import re
 import sys
 
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 # TODO Сделать версию с функциями def
 
 # Загрузить csv-файл для обработки
