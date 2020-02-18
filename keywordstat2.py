@@ -13,7 +13,7 @@ exit $?
 Программа принимает csv-файл из выгрузки Яндекс.Вебмастера и выдаёт результать на экран.
 
 Использование:
-keywordstat2.py < yandex-stat-file.csv
+keywordstat2.py < yandex-stat-file.csv > output.csv
 """
 import csv
 import re
@@ -22,21 +22,9 @@ import sys
 # Версия с использованием функций def
 # TODO Переделать программу, чтобы использовать модули
 # TODO Убрать лишние действия со словарями
-# TODO Добавить вывод в csv-файл
 
-VERSION = '0.1.3'
+VERSION = '0.2.0'
 
-
-# # Функция: Загрузка csv-файла в упорядоченный словарь.
-# # Фукция возвращает упорядоченный словарь.
-# def input_csv(filename):
-#
-#     from csv import DictReader
-#
-#     with open(filename, "r") as f:
-#         reader = DictReader(f)
-#         entries = [line for line in reader]
-#         return entries
 
 # Функция: Подсчёт общего количества кликов (clicks) по каждому запросу (query).
 # Функция возвращает список словарей, в котором строка запроса является ключом.
@@ -84,25 +72,27 @@ def sort_dict_value(dict_, reverse=False):
     return list_
 
 
+def output_csv(list_):
+    print('Word, Total')
+    for key, value in list_:
+        print(f"{key}, {value}")
+
+
 def main():
     # Загрузить csv-файл для обработки в упорядоченный словарь
     input_csv = csv.DictReader(sys.stdin)
 
     # Подсчитать общее количество кликов по каждому запросу
     queries = total_query_clicks(input_csv)
-    # print(queries)  # ---DEBUG---
 
     # Подсчитать общее количество кликов по каждому ключевому слову
     keywords = total_keyword_clicks(queries)
-    # print(keywords)  # ---DEBUG---
 
     # Сортировка словаря по значению
     keywords = sort_dict_value(keywords, reverse=True)
 
     # Вывод результатов
-    print(keywords)
-    # [('винипухов', 39.0), ('сильнее', 20.0), ('Несколько', 18.0), ('всех', 17.0), ('Винипухи', 13.0),
-    # ('никуда', 10.0), ('без', 10.0), ('винипуха', 7.0), ('долой', 7.0), ('на', 4.0)]
+    output_csv(keywords)
 
 
 if __name__ == "__main__":
