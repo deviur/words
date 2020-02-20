@@ -13,7 +13,7 @@ exit $?
 Программа принимает csv-файл из выгрузки Яндекс.Вебмастера и выдаёт результать на экран.
 
 Использование:
-keywordstat.py < yandex-stat-file.csv
+keywordstat1.py < yandex-stat-file.csv
 """
 
 import csv
@@ -21,7 +21,6 @@ import re
 import sys
 
 VERSION = '0.1.2'
-# TODO Сделать версию с функциями def
 
 # Загрузить csv-файл для обработки
 input_csv = csv.DictReader(sys.stdin)

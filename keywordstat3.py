@@ -7,13 +7,12 @@ else
 fi
 exit $?
 
-
 Программа подсчёта количества кликов по ключевым словам в поисковой системе Яндекс.
 
 Программа принимает csv-файл из выгрузки Яндекс.Вебмастера и выдаёт результать на экран.
 
 Использование:
-keywordstat2.py < yandex-stat-file.csv > output.csv
+keywordstat3.py < yandex-stat-file.csv > output.csv
 """
 import input_csv
 import querystat
